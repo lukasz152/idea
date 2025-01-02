@@ -4,6 +4,6 @@ using MediatR;
 
 namespace Application.Notes.Cms.Commands
 {
-    public sealed record CreateNoteCommand(string TopicOfNote, string Description, 
-        string? AssignedBy, Statuses? status, DateTime? DateToFinish) : IRequest<NoteCreatedResponse>;
+    public sealed record CreateNoteCommand(Guid userId, string TopicOfNote, 
+        string Description, StatusRequest? status, DateTime? DateToFinish) : IRequest<NoteCreatedResponse>;
 }

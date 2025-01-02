@@ -1,30 +1,38 @@
 ﻿using Abstractions.Kernel;
 using Core.Events;
 using Core.ValueObjects;
-using System.Diagnostics.Tracing;
 
 namespace Core.Entities
 {
     public sealed class Note :AggregateRoot
     {
-        public Guid NoteId { get;private set; }  //dlaczego musi byc id ?
         public Topic Topic { get; private set; }
         public Description Description { get; private set; }
+        public AssignedBy AssignedBy { get; private set; }
         public Status? Status {  get; private set; }
         public DateTime CreatedAt {  get; private set; }
         public DateTime UpdatedAt { get; private set; }
+#pragma warning disable S1144
+        public Guid? UserId { get; private set; }
+        public User? User { get; private set; }
+#pragma warning disable S1144
 
         private Note() { } //EntityFramework >?
-        public Note(Guid noteId, Topic topic ,Description description, Status status, DateTime occuredAt)
+        public Note(Guid noteId, Topic topic, Description description, AssignedBy assignedBy,
+            Status status, DateTime occuredAt) : base(noteId)
         {
-            NoteId = noteId;
             Topic = topic;
             Description = description;
+            AssignedBy = assignedBy;
             Status = status;
             CreatedAt = occuredAt;
             UpdatedAt = occuredAt;
         }
-
+        public void AssingTo(AssignedBy assignedBy, DateTime occuredAt)
+        {
+            AssignedBy = assignedBy;
+            UpdatedAt = occuredAt;
+        }
         public void Update(Topic topic, Description description, DateTime occuredAt)
         {
             if(Topic == topic && Description == description)

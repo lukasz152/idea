@@ -1,5 +1,4 @@
-﻿using Core.Services;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using System.Diagnostics.CodeAnalysis;
 
 namespace Core
@@ -9,8 +8,7 @@ namespace Core
     {
         public static IServiceCollection AddCore(this IServiceCollection services)
         {
-            return services
-                .AddSingleton<INoteService, NoteService>();
+            return services;
         }
     }
 }
